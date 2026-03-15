@@ -19,4 +19,32 @@
 
 4. formatter.js (Report Generator)
 
-- raw files -> human readable format
+- object -> human readable format
+
+# Improvements
+
+## Features
+
+1. take multiple input files
+2. output format
+   -- json, -- csv, --table
+3. time based analysis
+4. error detailed analysis
+5. suspicious traffic detection
+6. latency support optional if includes
+7. realtime streaming of logs
+8. interactive tui
+   blessed, ink
+
+## Performance
+
+1. Avoid regex
+2. Use maps instead of objects
+3. avoid unnecesary object creation directly pass data onto next function
+4. Avoid sorting entire dataseat instead use min-heap or streaming approach
+5. Parallel processing
+6. Incraese Stream buffer size
+7. Avoid string conversions
+8. Profile the code
+9. Lazy report stream the ouput
+10. Memory Footprint Optimization only track top IPs

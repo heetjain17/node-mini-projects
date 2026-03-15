@@ -1,42 +1,41 @@
-#LOG ANALYSIS REPORT
-===================
+# #LOG ANALYSIS REPORT
 
 ## SUMMARY
 
-- Total Requests : 20
-- Invalid Lines  : 4
-- Error Requests : 5
+- Total Requests : 1000000
+- Invalid Lines : 0
+- Error Requests : 249212
 
 ## TOP IP ADDRESSES
 
-1. 192.168.1.10 (4 requests)
-2. 192.168.1.11 (3 requests)
-3. 192.168.1.12 (2 requests)
-4. 192.168.1.13 (1 requests)
-5. 192.168.1.14 (1 requests)
+1. 192.168.1.10 (199652 requests)
+2. 192.168.1.11 (149878 requests)
+3. 192.168.1.12 (100002 requests)
+4. 192.168.1.13 (50288 requests)
+5. 192.168.1.22 (50266 requests)
 
 ## MOST REQUESTED ENDPOINTS
 
-1. /api/users (6 requests)
-2. /products (3 requests)
-3. /api/orders (3 requests)
-4. /login (2 requests)
-5. /api/products (2 requests)
+1. /api/users (299537 requests)
+2. /api/orders (149993 requests)
+3. /products (149978 requests)
+4. /dashboard (100410 requests)
+5. /login (99986 requests)
 
 ## HTTP METHODS
 
-GET: 17
-POST: 3
+GET: 849964
+POST: 150036
 PUT: 0
 PATCH: 0
 DELETE: 0
 
 ## STATUS CODES
 
-200: 14
-201: 1
-401: 1
-404: 2
-500: 2
+200: 700738
+201: 50050
+401: 50172
+404: 99038
+500: 100002
 
-Generated at: 15/3/2026, 9:04:29 pm
+Generated at: 15/3/2026, 10:44:37 pm
