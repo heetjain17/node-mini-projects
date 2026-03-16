@@ -4,6 +4,7 @@ let totalRequests = 0,
 let ipCounts = {},
   endpointCounts = {},
   methodCounts,
+  reqPerMin = {},
   statusCounts = {};
 methodCounts = {
   GET: 0,
@@ -41,8 +42,15 @@ export const analyzer = (log) => {
   }
 
   if (log["status"] >= 400) errorRequests += 1;
-};
 
+  const [datePart, hour, min] = log["timestamp"].split(":");
+  const short = datePart.slice(0, 6) + " " + hour + ":" + min;
+  if (!reqPerMin[short]) {
+    reqPerMin[short] = 1;
+  } else {
+    reqPerMin[short] += 1;
+  }
+};
 export const getResults = () => ({
   totalRequests,
   invalidLines,
@@ -51,4 +59,5 @@ export const getResults = () => ({
   endpointCounts,
   methodCounts,
   statusCounts,
+  reqPerMin,
 });

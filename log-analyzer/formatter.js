@@ -18,6 +18,7 @@ const generateContent = ({
   endpointCounts,
   methodCounts,
   statusCounts,
+  reqPerMin,
 }) => {
   const topIps = Object.entries(ipCounts)
     .sort((a, b) => b[1] - a[1])
@@ -45,6 +46,10 @@ const generateContent = ({
 
   const generatedTime = new Date().toLocaleString("en-IN");
 
+  const reqPerMinSection = Object.entries(reqPerMin)
+    .map(([timeStamp, count]) => `${timeStamp}: ${count}`)
+    .join("\n");
+
   return `#LOG ANALYSIS REPORT
 ===================
 
@@ -57,6 +62,9 @@ const generateContent = ({
 ## TOP IP ADDRESSES
 
 ${ipSection}
+
+## REQ PER MIN
+${reqPerMinSection}
 
 ## MOST REQUESTED ENDPOINTS
 
