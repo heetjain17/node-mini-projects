@@ -28,12 +28,12 @@
 1. take multiple input files
 2. output format
    -- json, -- csv, --table
-3. time based analysis
-4. error detailed analysis
-5. suspicious traffic detection
-6. latency support optional if includes
-7. realtime streaming of logs
-8. interactive tui
+   ~~3. time based analysis~~
+3. error detailed analysis
+4. suspicious traffic detection
+5. latency support optional if includes
+6. realtime streaming of logs
+7. interactive tui
    blessed, ink
 
 ## Performance

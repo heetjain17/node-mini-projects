@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 
-export const generateReport = async (stats) => {
-  const content = generateContent(stats);
+export const generateReport = async (stats, options) => {
+  const content = generateContentMd(stats, options);
   try {
     await fs.writeFile("report.md", content, "utf-8");
   } catch (error) {
@@ -10,19 +10,22 @@ export const generateReport = async (stats) => {
   }
 };
 
-const generateContent = ({
-  totalRequests,
-  invalidLines,
-  errorRequests,
-  ipCounts,
-  endpointCounts,
-  methodCounts,
-  statusCounts,
-  reqPerMin,
-}) => {
+const generateContentMd = (
+  {
+    totalRequests,
+    invalidLines,
+    errorRequests,
+    ipCounts,
+    endpointCounts,
+    methodCounts,
+    statusCounts,
+    reqPerMin,
+  },
+  options,
+) => {
   const topIps = Object.entries(ipCounts)
     .sort((a, b) => b[1] - a[1])
-    .slice(0, 5);
+    .slice(0, options.topIp);
 
   const topEndpoints = Object.entries(endpointCounts)
     .sort((a, b) => b[1] - a[1])
@@ -46,9 +49,19 @@ const generateContent = ({
 
   const generatedTime = new Date().toLocaleString("en-IN");
 
-  const reqPerMinSection = Object.entries(reqPerMin)
+  const reqList = Object.entries(reqPerMin)
     .map(([timeStamp, count]) => `${timeStamp}: ${count}`)
     .join("\n");
+
+  const reqPerMinSection = options.reqPerMin
+    ? `
+  
+## REQ PER MIN
+
+${reqList}
+
+  `
+    : ``;
 
   return `#LOG ANALYSIS REPORT
 ===================
@@ -62,10 +75,7 @@ const generateContent = ({
 ## TOP IP ADDRESSES
 
 ${ipSection}
-
-## REQ PER MIN
 ${reqPerMinSection}
-
 ## MOST REQUESTED ENDPOINTS
 
 ${endpointSection}

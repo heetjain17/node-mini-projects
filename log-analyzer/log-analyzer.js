@@ -37,17 +37,45 @@ const readlogs = async (file) => {
   return getResults();
 };
 
-async function main() {
-  const logfilePath = process.argv[2];
-  if (!logfilePath) {
+const parseArgs = () => {
+  const args = process.argv.slice(2);
+  let file = null;
+
+  const options = {
+    topIp: 5,
+    reqPerMin: false,
+    format: "md",
+    output: null,
+  };
+
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (!arg.startsWith("--") && !file) {
+      file = arg;
+    } else if (arg == "--top-ip") {
+      options.topIp = Number(args[++i]);
+    } else if (arg == "--req-per-min") {
+      options.reqPerMin = true;
+    } else if (arg == "--format") {
+      options.format = args[++i];
+    } else if (arg == "--output") {
+      options.output = args[++i];
+    }
+  }
+  return { file, options };
+};
+
+const main = async () => {
+  const { file, options } = parseArgs();
+  if (!file) {
     console.error("Usage: node log-analyzer.js <logfile>");
     process.exit(2);
   }
-  await validateInput(logfilePath);
-  const results = await readlogs(logfilePath);
+  await validateInput(file);
+  const results = await readlogs(file);
 
-  await generateReport(results);
+  await generateReport(results, options);
   console.log("Report generated successfully.");
-}
+};
 
 main();
