@@ -62,6 +62,10 @@ const parseArgs = () => {
       options.output = args[++i];
     }
   }
+
+  if (!options.output) {
+    options.output = `report.${options.format}`;
+  }
   return { file, options };
 };
 

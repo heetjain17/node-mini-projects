@@ -2,12 +2,14 @@
 
 1. log-analyzer.js (Entry point / CLI controller)
 
-- Read CLI arguments
-- Validate the file
-- Create the file stream
-- Read the file line by line
-- Pass each line to the parser
-- Send parsed data to the analyzer
+- read CLI arguments
+- validate the inputs
+- create the file stream
+- read the file line by line
+- pass each line to the parser
+- pass the data into analyzer
+- get results from analyzer
+- pass the results along with options to the generate report
 
 2. parser.js (Log parser)
 
@@ -16,25 +18,26 @@
 3. analyzer.js (Statistics Engine)
 
 - update all the statistics
+- return analyzed data
 
 4. formatter.js (Report Generator)
 
-- object -> human readable format
+- generate report based options pased
 
 # Improvements
 
 ## Features
 
-1. take multiple input files
-2. output format
-   -- json, -- csv, --table
-   ~~3. time based analysis~~
-3. error detailed analysis
-4. suspicious traffic detection
-5. latency support optional if includes
-6. realtime streaming of logs
-7. interactive tui
-   blessed, ink
+- take multiple input files
+  ~~- output format
+  -- json, -- csv, --table~~
+  ~~- time based analysis~~
+- error detailed analysis
+- suspicious traffic detection
+- latency support optional if includes
+- realtime streaming of logs
+- interactive tui
+  blessed, ink
 
 ## Performance
 
