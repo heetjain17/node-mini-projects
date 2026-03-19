@@ -29,16 +29,17 @@
 
 ## CURRENT ACHIEVABLES
 
-- TCP server running
-- raw HTTP req logging
-- req res handling
-- routing
-- JSON support in res
-- 404 handling
+~~- TCP server running~~
+~~- raw HTTP req logging~~
+~~- req res handling~~
+~~- routing~~
+~~- JSON support in res~~
+~~- 404 handling~~
 
 ## FUTURE IMPROVEMENTS
 
 - **middlewares**
+- improved res using statuscodes
 - query params
 - POST
 - route params
