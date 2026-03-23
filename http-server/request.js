@@ -1,7 +1,7 @@
 export const reqParser = (rawReq) => {
   const [headerPart, bodyPart] = rawReq.split("\r\n\r\n");
   const lines = headerPart.split("\r\n");
-  const [method, path, version] = lines[0].split(" ");
+  const [method, completePath, version] = lines[0].split(" ");
 
   let headers = {};
   for (let i = 1; i < lines.length; i++) {
@@ -25,9 +25,26 @@ export const reqParser = (rawReq) => {
       body = null;
     }
   }
+
+  const [path, queryString] = completePath.split("?");
+
+  const query = {};
+
+  if (queryString) {
+    const pairs = queryString.split("&");
+
+    for (let pair of pairs) {
+      if (!pair) continue;
+      const [key, value = ""] = pair.split("=");
+      if (!key) continue;
+      query[key] = value;
+    }
+  }
+
   return {
     method: method,
     path: path,
+    query: query,
     version: version,
     headers: headers,
     body: body,

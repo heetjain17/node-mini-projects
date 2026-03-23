@@ -7,10 +7,47 @@ export const rootHandler = (req, res) => {
 };
 
 export const getUser = (req, res) => {
-  res.json({ users: ["batman", "robin"] });
+  const { id } = req.query || {};
+
+  const users = [
+    { id: "1", name: "batman" },
+    { id: "2", name: "robin" },
+  ];
+
+  if (!id) return res.json(users);
+
+  const user = users.find((u) => u.id === id);
+
+  if (!user) return res.status(404).json({ error: "User Not Found" });
+
+  return res.json({ user });
 };
 
 export const createUser = (req, res) => {
   const data = req.body;
-  res.status(201).json({ name: data.name, place: data.place });
+
+  if (!data || typeof data !== "object") {
+    return res.status(400).json({ error: "Invalid JSON body" });
+  }
+
+  if (!data.name || !data.place) {
+    return res
+      .status(400)
+      .json({ error: "Missing required fields: name, place" });
+  }
+
+  res.status(201).json({
+    message: "User created",
+    user: { name: data.name, place: data.place },
+  });
+};
+
+export const debugHandler = (req, res) => {
+  res.json({
+    method: req.method,
+    path: req.path,
+    query: req.query,
+    headers: req.headers,
+    body: req.body,
+  });
 };

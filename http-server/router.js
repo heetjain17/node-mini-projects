@@ -1,4 +1,4 @@
-import { getUser, createUser, rootHandler } from "./handlers.js";
+import { getUser, createUser, rootHandler, debugHandler } from "./handlers.js";
 
 const routes = {
   "/": {
@@ -7,6 +7,9 @@ const routes = {
   "/user": {
     GET: getUser,
     POST: createUser,
+  },
+  "/debug": {
+    GET: debugHandler,
   },
 };
 

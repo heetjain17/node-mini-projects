@@ -24,7 +24,7 @@
      - headers,
      - body
 
-6. utils.js
+6. handler.js
    - helper functions
 
 ## CURRENT ACHIEVABLES
@@ -40,7 +40,7 @@
 
 - **middlewares**
   ~~- improved res using statuscodes~~
-- query params
-- POST
+  ~~- query params~~
+  ~~- POST~~
 - route params
 - error and logs handling
