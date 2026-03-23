@@ -1,20 +1,26 @@
-import { aboutHandler, rootHandler, userHandler } from "./handlers.js";
+import { getUser, createUser, rootHandler } from "./handlers.js";
 
-const routes = [
-  { method: "GET", path: "/", handler: rootHandler },
-  { method: "GET", path: "/user", handler: userHandler },
-  { method: "GET", path: "/about", handler: aboutHandler },
-];
+const routes = {
+  "/": {
+    GET: rootHandler,
+  },
+  "/user": {
+    GET: getUser,
+    POST: createUser,
+  },
+};
 
 export const routeMatch = (parsedReq) => {
-  for (let i = 0; i < routes.length; i++) {
-    if (
-      parsedReq.method === routes[i].method &&
-      parsedReq.path === routes[i].path
-    ) {
-      return routes[i].handler;
-    }
+  const { method, path } = parsedReq;
+
+  const route = routes[path];
+  if (!route) return { status: 404 };
+
+  const handler = route[method];
+  if (!handler) {
+    const allowedMethods = Object.keys(route);
+    return { status: 405, allowedMethods };
   }
 
-  return null;
+  return { status: 200, handler: handler };
 };

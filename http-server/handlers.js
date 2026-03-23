@@ -1,15 +1,16 @@
 export const rootHandler = (req, res) => {
   res
-    .status(201)
+    .status(200)
     .setHeader("Name", "batman")
     .setHeader("Job", "protect-gowtham")
     .json({ enemies: ["Joker", "Catgirl"] });
 };
 
-export const userHandler = (req, res) => {
+export const getUser = (req, res) => {
   res.json({ users: ["batman", "robin"] });
 };
 
-export const aboutHandler = (req, res) => {
-  res.send("About Page");
+export const createUser = (req, res) => {
+  const data = req.body;
+  res.status(201).json({ name: data.name, place: data.place });
 };
