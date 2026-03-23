@@ -1,15 +1,15 @@
 export const reqParser = (rawReq) => {
-  const req = rawReq.split("\r\n");
-
-  const [method, path, version] = req[0].split(" ");
+  const [headerPart, bodyPart] = rawReq.split("\r\n\r\n");
+  const lines = headerPart.split("\r\n");
+  const [method, path, version] = lines[0].split(" ");
 
   let headers = {};
-  for (let i = 1; i < req.length; i++) {
-    if (req[i] === "") break;
+  for (let i = 1; i < lines.length; i++) {
+    if (lines[i] === "") break;
 
-    let idx = req[i].indexOf(":");
-    let key = req[i].slice(0, idx);
-    let value = req[i].slice(idx + 1);
+    let idx = lines[i].indexOf(":");
+    let key = lines[i].slice(0, idx);
+    let value = lines[i].slice(idx + 1);
 
     key = key.trim().toLowerCase();
     value = value.trim();
@@ -17,11 +17,19 @@ export const reqParser = (rawReq) => {
     headers[key] = value;
   }
 
+  let body = bodyPart || null;
+  if (body && headers["content-type"] == "application/json") {
+    try {
+      body = JSON.parse(body);
+    } catch {
+      body = null;
+    }
+  }
   return {
     method: method,
     path: path,
     version: version,
     headers: headers,
-    body: null,
+    body: body,
   };
 };
