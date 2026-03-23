@@ -1,5 +1,9 @@
 export const rootHandler = (req, res) => {
-  res.send("Welcome Home");
+  res
+    .status(201)
+    .setHeader("Name", "batman")
+    .setHeader("Job", "protect-gowtham")
+    .json({ enemies: ["Joker", "Catgirl"] });
 };
 
 export const userHandler = (req, res) => {

@@ -39,7 +39,7 @@
 ## FUTURE IMPROVEMENTS
 
 - **middlewares**
-- improved res using statuscodes
+  ~~- improved res using statuscodes~~
 - query params
 - POST
 - route params
