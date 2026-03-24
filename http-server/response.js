@@ -51,6 +51,8 @@ export const createResponse = (socket) => {
         .setHeader("Content-Type", "application/json")
         .send(JSON.stringify(data));
     },
+
+    sent: () => sent,
   };
   return response;
 };
