@@ -24,7 +24,7 @@ export const handle = (rawData, socket) => {
 
   if (result.status === 200) {
     let mwIdx = 0;
-    const stack = [...middlewares, result.handler];
+    const stack = [...middlewares, ...result.middleware, result.handler];
     const next = () => {
       if (res.sent() === true) {
         console.error("next() called after response was sent");
