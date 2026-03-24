@@ -51,3 +51,18 @@ export const debugHandler = (req, res) => {
     body: req.body,
   });
 };
+
+export const getProjectById = (req, res) => {
+  const id = req.params.id;
+
+  const projects = [
+    { id: "123", name: "WhiteHunt" },
+    { id: "124", name: "Ancient Lure" },
+  ];
+
+  const project = projects.find((p) => p.id === id);
+
+  if (!project) return res.status(404).json({ error: "Project Not Found" });
+
+  return res.json({ project });
+};

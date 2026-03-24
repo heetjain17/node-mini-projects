@@ -42,5 +42,5 @@
   ~~- improved res using statuscodes~~
   ~~- query params~~
   ~~- POST~~
-- route params
+  ~~- route params~~
 - error and logs handling
