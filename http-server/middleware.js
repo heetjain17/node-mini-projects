@@ -20,9 +20,7 @@ export const validate = (req, res, next) => {
 
 export const errorHandler = (err, req, res, next) => {
   console.error("ERROR:", err);
-  console.log("Error  handler hit");
   if (res.sent()) return;
-  console.log("Error handler hit + 1");
   res.status(500).json({
     error: err.message || "Internal Server Error",
   });

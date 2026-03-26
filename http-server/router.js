@@ -55,14 +55,19 @@ export const routeMatch = (req) => {
   return { status: 404 };
 };
 
+// for hadling route params
 const matchParams = (routePath, reqPath) => {
+  // from the array
   const routeParts = normalize(routePath).split("/");
+  // from the req
   const reqParts = normalize(reqPath).split("/");
 
+  // if the size of the routes are different then it means no match
   if (routeParts.length !== reqParts.length) return null;
 
   const params = {};
 
+  // extract params and store them in key,value pair
   for (let i = 0; i < routeParts.length; i++) {
     const routeSeg = routeParts[i];
     const reqSeg = reqParts[i];
@@ -78,6 +83,7 @@ const matchParams = (routePath, reqPath) => {
   return params;
 };
 
+// for handling trailing '/' which could lead to route mismatch
 const normalize = (path) => {
   if (path.length > 1 && path.endsWith("/")) {
     return path.slice(0, -1);

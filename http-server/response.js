@@ -36,6 +36,7 @@ export const createResponse = (socket) => {
 
       if (typeof body !== "string") body = String(body);
 
+      // if Content-Type is not already set by json then its called directly
       const finalHeaders = { ...headers };
       if (!finalHeaders["Content-Type"]) {
         finalHeaders["Content-Type"] = "text/plain";
@@ -46,6 +47,7 @@ export const createResponse = (socket) => {
       socket.end();
     },
 
+    // parse the body to json before calling send()
     json: (data) => {
       return response
         .setHeader("Content-Type", "application/json")

@@ -12,6 +12,7 @@ const use = (fn) => {
   middlewares.push(fn);
 };
 
+// stores global middlewares in order
 const middlewares = [];
 use(loggerA);
 use(loggerB);
@@ -20,11 +21,13 @@ use(errorHandler);
 export const handle = (rawData, socket) => {
   const res = createResponse(socket);
   const parsedReq = reqParser(rawData);
-
   const result = routeMatch(parsedReq);
 
+  // if route exists
   if (result.status === 200) {
     let mwIdx = 0;
+
+    // stack for executing middlewares for each route in order
     const stack = [
       ...middlewares,
       ...result.middleware,
@@ -33,6 +36,7 @@ export const handle = (rawData, socket) => {
     ];
 
     let error = null;
+
     const next = (err) => {
       if (res.sent() === true) {
         console.error("next() called after response was sent");
@@ -42,9 +46,11 @@ export const handle = (rawData, socket) => {
       if (err) error = err;
 
       const fn = stack[mwIdx++];
+
+      // fallback if global errorHandler doesnt executes
       if (!fn) {
         if (error && !res.sent()) {
-          console.log("Inside app middleware");
+          console.log("Fallback Middleware Hit");
           return res.status(500).json({
             error: error.message || "Internal Server Error",
           });
@@ -52,8 +58,8 @@ export const handle = (rawData, socket) => {
         return;
       }
 
+      // logic for executing error middleware
       const isErrorMw = fn.length === 4;
-
       try {
         if (error) {
           if (!isErrorMw) return next(error);
@@ -69,6 +75,7 @@ export const handle = (rawData, socket) => {
     next();
   }
 
+  // if route method not allowed
   if (result.status == 405) {
     res
       .status(405)
@@ -76,6 +83,7 @@ export const handle = (rawData, socket) => {
       .send("Method Not Allowed");
   }
 
+  // if route DNE
   if (result.status === 404) {
     res.status(404).send("Not Found");
   }

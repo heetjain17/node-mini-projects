@@ -3,6 +3,7 @@ export const reqParser = (rawReq) => {
   const lines = headerPart.split("\r\n");
   const [method, completePath, version] = lines[0].split(" ");
 
+  // store headers in key, value pairs
   let headers = {};
   for (let i = 1; i < lines.length; i++) {
     if (lines[i] === "") break;
@@ -17,6 +18,7 @@ export const reqParser = (rawReq) => {
     headers[key] = value;
   }
 
+  // store the body in json if mentioned
   let body = bodyPart || null;
   if (body && headers["content-type"] == "application/json") {
     try {
@@ -26,6 +28,7 @@ export const reqParser = (rawReq) => {
     }
   }
 
+  // store query params in key, value pair
   const [path, queryString] = completePath.split("?");
 
   const query = {};
