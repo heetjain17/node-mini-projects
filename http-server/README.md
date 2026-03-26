@@ -27,6 +27,9 @@
 6. handler.js
    - helper functions
 
+7. middleware.js
+   - middleware functions
+
 ## CURRENT ACHIEVABLES
 
 ~~- TCP server running~~
@@ -38,9 +41,37 @@
 
 ## FUTURE IMPROVEMENTS
 
-- **middlewares**
-  ~~- improved res using statuscodes~~
-  ~~- query params~~
-  ~~- POST~~
-  ~~- route params~~
-- error and logs handling
+~~- **middlewares**~~
+~~- improved res using statuscodes~~
+~~- query params~~
+~~- POST~~
+~~- route params~~
+
+## NEVER SEE ME AGAIN
+
+1. System level
+   - Streaming of output (send file in chunks)
+     support res.write(), res.end()
+   - Request body streaming
+     handle large payloads and chunked requests
+   - Keep alive connections
+     on every req from same client the connection should be same
+
+2. Middleware
+   - Route groups like express
+     example app.use('/api/v1', auth)
+   - Middleware composition
+     multiple middlewares behave like sigle unit
+   - Req lifecycle tracking
+     req.id, req.startTime
+
+3. Prod lvl
+   - Rate limiting
+   - Caching layer
+   - Compression
+
+4. Convert to real framework
+   - Plugin system
+   - add configs
+   - concurrency + backpressure
+   - Observability: logs, stats, analytics

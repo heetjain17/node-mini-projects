@@ -63,10 +63,10 @@ export const handle = (rawData, socket) => {
       try {
         if (error) {
           if (!isErrorMw) return next(error);
-          fn(error, parsedReq, res, next);
+          Promise.resolve(fn(error, parsedReq, res, next)).catch(next);
         } else {
           if (isErrorMw) return next();
-          fn(parsedReq, res, next);
+          Promise.resolve(fn(parsedReq, res, next)).catch(next);
         }
       } catch (e) {
         next(e);

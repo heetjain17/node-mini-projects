@@ -45,6 +45,7 @@ export const createResponse = (socket) => {
       const res = buildResponse(statusCode, finalHeaders, body);
       socket.write(res);
       socket.end();
+      console.log("Client disconnected");
     },
 
     // parse the body to json before calling send()
