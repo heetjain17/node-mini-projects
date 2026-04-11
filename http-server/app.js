@@ -3,6 +3,7 @@ import { reqParser } from "./request.js";
 import { routeMatch } from "./router.js";
 import { createResponse } from "./response.js";
 import { errorHandler, loggerA, loggerB } from "./middleware.js";
+import { createRateLimiter } from "./rateLimiter.js";
 
 server.listen(8000, () => {
   console.log("TCP Server running on port 8000");
@@ -12,8 +13,16 @@ const use = (fn) => {
   middlewares.push(fn);
 };
 
+// hard ratelimit for testing
+const config = {
+  maxTokens: 5,
+  refilRate: 1 / 10000, // 1 token every 10 seconds
+};
+const limiter = createRateLimiter(config);
+
 // stores global middlewares in order
 const middlewares = [];
+use(limiter);
 use(loggerA);
 use(loggerB);
 use(errorHandler);
