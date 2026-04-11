@@ -18,9 +18,9 @@ use(loggerA);
 use(loggerB);
 use(errorHandler);
 
-export const handle = (rawData, socket) => {
-  const res = createResponse(socket);
-  const parsedReq = reqParser(rawData);
+export const handle = (rawData, context) => {
+  const res = createResponse(context.socket);
+  const parsedReq = reqParser(rawData, context.ip);
   const result = routeMatch(parsedReq);
 
   // if route exists

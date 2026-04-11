@@ -1,4 +1,6 @@
-export const reqParser = (rawReq) => {
+import { normalize } from "node:path";
+
+export const reqParser = (rawReq, rawIp) => {
   const [headerPart, bodyPart] = rawReq.split("\r\n\r\n");
   const lines = headerPart.split("\r\n");
   const [method, completePath, version] = lines[0].split(" ");
@@ -44,6 +46,9 @@ export const reqParser = (rawReq) => {
     }
   }
 
+  // formatting Ip
+  const ip = normalizeIp(rawIp, headers);
+
   return {
     method: method,
     path: path,
@@ -51,5 +56,26 @@ export const reqParser = (rawReq) => {
     version: version,
     headers: headers,
     body: body,
+    ip: ip,
   };
+};
+
+const normalizeIp = (rawIp, headers) => {
+  let ip;
+  if (headers["x-forwarded-for"]) {
+    ip = headers["x-forwarded-for"].split(",")[0].trim();
+  } else {
+    ip = rawIp.trim();
+  }
+
+  // normalizing IPv4 which was mapped to IPv6
+  if (ip.startsWith("::ffff:")) {
+    ip = ip.slice(7);
+  }
+
+  if (ip == "::1") {
+    ip = "127.0.0.1";
+  }
+
+  return ip;
 };
